@@ -1,37 +1,55 @@
-// @flow
+'use strict';
 
-import React, { Children, Component, type ComponentType } from 'react';
-import { Transition } from 'react-transition-group';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ToastController = undefined;
 
-import { NOOP } from './utils';
-import type { ToastProps } from './ToastElement';
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-type Props = ToastProps & { component: ComponentType<ToastProps> };
-type State = { isRunning: boolean };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const defaultAutoDismissTimeout = 5000;
+var _react = require('react');
 
-const TimerType = {
-  clear: NOOP,
-  pause: NOOP,
-  resume: NOOP,
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = require('react-transition-group');
+
+var _utils = require('./utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var defaultAutoDismissTimeout = 5000;
+
+var TimerType = {
+  clear: _utils.NOOP,
+  pause: _utils.NOOP,
+  resume: _utils.NOOP
 };
 
-function Timer(callback: () => void, delay: number) {
-  let timerId: TimeoutID;
-  let start = delay;
-  let remaining = delay;
+function Timer(callback, delay) {
+  var timerId = void 0;
+  var start = delay;
+  var remaining = delay;
 
-  this.clear = function() {
+  this.clear = function () {
     clearTimeout(timerId);
   };
 
-  this.pause = function() {
+  this.pause = function () {
     clearTimeout(timerId);
     remaining -= Date.now() - start;
   };
 
-  this.resume = function() {
+  this.resume = function () {
     start = Date.now();
     clearTimeout(timerId);
     timerId = setTimeout(callback, remaining);
@@ -40,71 +58,94 @@ function Timer(callback: () => void, delay: number) {
   this.resume();
 }
 
-export class ToastController extends Component<Props, State> {
-  timeout: typeof TimerType;
-  state = {
-    isRunning: Boolean(this.props.autoDismiss),
-  };
-  static defaultProps = {
-    autoDismiss: false,
-  };
+var ToastController = exports.ToastController = function (_Component) {
+  _inherits(ToastController, _Component);
 
-  componentDidMount() {
-    this.startTimer();
-  }
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.autoDismiss !== this.props.autoDismiss) {
-      const startOrClear = this.props.autoDismiss
-        ? this.startTimer
-        : this.clearTimer;
+  function ToastController() {
+    var _ref;
 
-      startOrClear();
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, ToastController);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ToastController.__proto__ || Object.getPrototypeOf(ToastController)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      isRunning: Boolean(_this.props.autoDismiss)
+    }, _this.startTimer = function () {
+      var _this$props = _this.props,
+          autoDismiss = _this$props.autoDismiss,
+          autoDismissTimeout = _this$props.autoDismissTimeout,
+          onDismiss = _this$props.onDismiss;
+
+
+      if (!autoDismiss) return;
+
+      _this.setState({ isRunning: true });
+      _this.timeout = new Timer(onDismiss, autoDismissTimeout);
+    }, _this.clearTimer = function () {
+      if (_this.timeout) _this.timeout.clear();
+    }, _this.onMouseEnter = function () {
+      _this.setState({ isRunning: false }, function () {
+        if (_this.timeout) _this.timeout.pause();
+      });
+    }, _this.onMouseLeave = function () {
+      _this.setState({ isRunning: true }, function () {
+        if (_this.timeout) _this.timeout.resume();
+      });
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
-  componentWillUnmount() {
-    this.clearTimer();
-  }
 
-  startTimer = () => {
-    const { autoDismiss, autoDismissTimeout, onDismiss } = this.props;
+  _createClass(ToastController, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.startTimer();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.autoDismiss !== this.props.autoDismiss) {
+        var startOrClear = this.props.autoDismiss ? this.startTimer : this.clearTimer;
 
-    if (!autoDismiss) return;
+        startOrClear();
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.clearTimer();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          autoDismiss = _props.autoDismiss,
+          autoDismissTimeout = _props.autoDismissTimeout,
+          Toast = _props.component,
+          props = _objectWithoutProperties(_props, ['autoDismiss', 'autoDismissTimeout', 'component']);
 
-    this.setState({ isRunning: true });
-    this.timeout = new Timer(onDismiss, autoDismissTimeout);
-  };
-  clearTimer = () => {
-    if (this.timeout) this.timeout.clear();
-  };
+      var isRunning = this.state.isRunning;
 
-  onMouseEnter = () => {
-    this.setState({ isRunning: false }, () => {
-      if (this.timeout) this.timeout.pause();
-    });
-  };
-  onMouseLeave = () => {
-    this.setState({ isRunning: true }, () => {
-      if (this.timeout) this.timeout.resume();
-    });
-  };
+      // NOTE: conditions here so methods can be clean
 
-  render() {
-    const { autoDismiss, autoDismissTimeout, component: Toast, ...props } = this.props;
-    const { isRunning } = this.state;
+      var handleMouseEnter = autoDismiss ? this.onMouseEnter : _utils.NOOP;
+      var handleMouseLeave = autoDismiss ? this.onMouseLeave : _utils.NOOP;
 
-    // NOTE: conditions here so methods can be clean
-    const handleMouseEnter = autoDismiss ? this.onMouseEnter : NOOP;
-    const handleMouseLeave = autoDismiss ? this.onMouseLeave : NOOP;
+      return _react2.default.createElement(Toast, _extends({
+        autoDismiss: autoDismiss,
+        autoDismissTimeout: autoDismissTimeout,
+        isRunning: isRunning,
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave
+      }, props));
+    }
+  }]);
 
-    return (
-      <Toast
-        autoDismiss={autoDismiss}
-        autoDismissTimeout={autoDismissTimeout}
-        isRunning={isRunning}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      />
-    );
-  }
-}
+  return ToastController;
+}(_react.Component);
+
+ToastController.defaultProps = {
+  autoDismiss: false
+};
