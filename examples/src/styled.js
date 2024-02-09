@@ -6,7 +6,7 @@ import SyntaxHighlighter, {
   registerLanguage,
 } from 'react-syntax-highlighter/prism-light';
 import jsxGrammar from 'react-syntax-highlighter/languages/prism/jsx';
-import * as colors from '../../src/colors';
+import * as colors from '../../dist/colors';
 
 registerLanguage('jsx', jsxGrammar);
 

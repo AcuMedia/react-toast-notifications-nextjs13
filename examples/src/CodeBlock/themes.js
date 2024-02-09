@@ -1,4 +1,4 @@
-import * as colors from '../../../src/colors';
+import * as colors from '../../../dist/colors';
 
 const commonCode = {
   fontSize: 12,
