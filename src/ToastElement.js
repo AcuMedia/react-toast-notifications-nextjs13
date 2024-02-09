@@ -1,5 +1,5 @@
 // @flow
-/** @jsx jsx */
+/** @jsxImportSource @emotion/core */
 
 import React, {
   Children,

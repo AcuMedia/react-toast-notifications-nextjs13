@@ -1,18 +1,18 @@
 {
-  "name": "react-toast-notifications",
-  "version": "2.5.1",
-  "description": "A configurable, composable, toast notification system for react.",
+  "name": "react-toast-notifications-nextjs13",
+  "version": "2.5.2",
+  "description": "A configurable, composable, toast notification system for react updated to function with Next.js v13.",
   "main": "dist/index.js",
   "typings": "./index.d.ts",
   "license": "MIT",
-  "author": "Joss Mackison (https://github.com/jossmac)",
-  "homepage": "https://jossmac.github.io/react-toast-notifications",
+  "author": "AcuMedia (https://github.com/AcuMedia)",
+  "homepage": "https://github.com/AcuMedia/react-toast-notifications-nextjs13",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jossmac/react-toast-notifications.git"
+    "url": "https://github.com/AcuMedia/react-toast-notifications-nextjs13"
   },
   "bugs": {
-    "url": "https://github.com/jossmac/react-toast-notifications/issues"
+    "url": "https://github.com/AcuMedia/react-toast-notifications-nextjs13/issues"
   },
   "keywords": [
     "react",
