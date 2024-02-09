@@ -1,3 +1,5 @@
+# A few changes were made to jossmac's react-toast-notifications so that it compiles with Next.js 13
+
 # 🚨 Not Maintained
 
 This was a great project to learn from and fulfilled the requirements it set out to. Unfortunately, I can no-longer give this project the time it needs. Consider [react-hot-toast](https://github.com/timolins/react-hot-toast) as an alternative, or look at the source and make your own 🎉 (there really isn't much to it).
