@@ -1,4 +1,6 @@
-# A few changes were made to jossmac's react-toast-notifications so that it compiles with Next.js 13
+Update: A few changes were made to jossmac's react-toast-notifications so that it compiles with Next.js 13
+
+---
 
 # 🚨 Not Maintained
 
