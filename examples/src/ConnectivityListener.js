@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { useToasts } from '../../dist';
+import { useToasts } from '../../src';
 
 export const ConnectivityListener = () => {
   useConnectivityListener();

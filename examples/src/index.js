@@ -22,8 +22,8 @@ import {
 import CodeBlock from './CodeBlock';
 import './index.css';
 import { ConnectivityListener } from './ConnectivityListener';
-import { ToastProvider, ToastConsumer, useToasts } from '../../dist';
-import * as colors from '../../dist/colors';
+import { ToastProvider, ToastConsumer, useToasts } from '../../src';
+import * as colors from '../../src/colors';
 import exampleText from 'raw-loader!./raw/example';
 
 const snackStates = {
